@@ -1,0 +1,37 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Wormhole Bookmark Parser</title>
+    <script type="text/javascript" src="./parse.js"></script>
+    <script type="text/javascript">
+      function update() {
+        let bookmarkName = document.getElementById('input').value;
+        let parsedBookmark = parseWormholeBookmarkName(bookmarkName);
+        let valid = false;
+        if (!parsedBookmark.errors || parsedBookmark.errors.length == 0) {
+          valid = true;
+        }
+        let prettifiedbookmarkJson = JSON.stringify(parsedBookmark, null, 2);
+        let outputElement = document.getElementById('output');
+        outputElement.value = prettifiedbookmarkJson;
+        outputElement.style.borderColor = valid ? '' : 'red';
+      }
+    </script>
+    <style type="text/css">
+      body {
+        text-align: center;
+        font-family: Sans-Serif;
+      }
+    </style>
+</head>
+
+<body>
+  <p>
+    <textarea id="input" cols="60" rows="1" onkeyup="update()" onchange="update()" onfocus="update()" autofocus>121+3 HS (Lustrevik) ABC</textarea>
+  </p>
+  <p>
+    <textarea id="output" cols="60" rows="15" readonly></textarea>
+  </p>
+</body>
+</html>
