@@ -1,6 +1,6 @@
 let regexes = {
   allSpacesOutsideOfParens: /(?!\(.*)\s(?![^(]*?\))/g,
-  leavingWormholeName: /^(0|[1-9a-zA-Z]+)\+[1-9a-zA-Z]?$/,
+  leavingWormholeName: /^(0|[1-9a-zA-Z]+)\+[1-9a-zA-Z]$/,
   returningWormholeName: /^[1-9a-zA-Z]+\s-$/,
   enclosedInParens: /^\(.+\)$/,
   signatureFirstThree: /^[A-Z]{3}$/
