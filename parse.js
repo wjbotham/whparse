@@ -22,6 +22,7 @@ let options = {
     "hs": "Highsec",
     "ls": "Lowsec",
     "ns": "Nullsec",
+    "ts": "Pochven",
     "home": "Home",
     "pi": "PI System"
   }
