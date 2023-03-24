@@ -3,7 +3,8 @@ let regexes = {
   leavingWormholeName: /^(0|[1-9a-zA-Z]+)\+[1-9a-zA-Z]$/,
   returningWormholeName: /^[1-9a-zA-Z]+\s-$/,
   enclosedInParens: /^\(.+\)$/,
-  signatureFirstThree: /^[A-Z]{3}$/
+  signatureFirstThree: /^[A-Z]{3}$/,
+  allPlusesAndZeros: /[0+]/g
 };
 
 let options = {
@@ -36,7 +37,7 @@ function parseWormholeBookmarkName(name) {
   // parse "chain names" of the origin/destination systems
   if (regexes.leavingWormholeName.exec(remainingNameCells[0])) {
     result.originChainName = remainingNameCells[0].split("+")[0];
-    result.destinationChainName = remainingNameCells[0].replace(/[0+]/g, "");
+    result.destinationChainName = remainingNameCells[0].replace(regexes.allPlusesAndZeros, "");
     result.direction = "leaving";
   } else if (regexes.returningWormholeName.exec(remainingNameCells.slice(0,2).join(" "))) {
     result.originChainName = remainingNameCells[0];
