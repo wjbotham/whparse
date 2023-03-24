@@ -7,16 +7,11 @@
     <script type="text/javascript" src="./parse.js"></script>
     <script type="text/javascript">
       function update() {
-        let bookmarkName = document.getElementById('input').value;
-        let parsedBookmark = parseWormholeBookmarkName(bookmarkName);
-        let valid = false;
-        if (!parsedBookmark.errors || parsedBookmark.errors.length == 0) {
-          valid = true;
-        }
-        let prettifiedbookmarkJson = JSON.stringify(parsedBookmark, null, 2);
+        let bookmarkNames = document.getElementById('input').value.split("\n");
+        let parsedBookmarks = bookmarkNames.map(name => parseWormholeBookmarkName(name));
+        let prettifiedBookmarksJson = JSON.stringify(parsedBookmarks, null, 2);
         let outputElement = document.getElementById('output');
-        outputElement.value = prettifiedbookmarkJson;
-        outputElement.style.borderColor = valid ? '' : 'red';
+        outputElement.value = prettifiedBookmarksJson;
       }
     </script>
     <style type="text/css">
@@ -30,10 +25,11 @@
 <body>
   <h2>🌈 Nobody asked for this and it doesn't work 🌈</h2>
   <p>
-    <textarea id="input" cols="60" rows="3" onkeyup="update()" onchange="update()" onfocus="update()" autofocus>131+2 HS (Lustrevik) ABC</textarea>
+    <textarea id="input" cols="50" rows="4" onkeyup="update()" onchange="update()" onfocus="update()" autofocus>131+2 HS (Lustrevik) ABC
+1312 - Unk DEF</textarea>
   </p>
   <p>
-    <textarea id="output" cols="60" rows="15" style="background-color:#DDD" readonly></textarea>
+    <textarea id="output" cols="50" rows="30" style="background-color:#DDD" readonly></textarea>
   </p>
 </body>
 </html>
