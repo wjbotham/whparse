@@ -9,7 +9,7 @@ let regexes = {
 
 let options = {
   wormholeSize: {
-    "xl": "XL (any except supercaps)",
+    "c": "C (any except supercaps)",
     "l": "L (battleship and smaller)",
     "m": "M (battlecruiser and smaller)",
     "s": "S (destroyer and smaller)"
@@ -57,14 +57,29 @@ function parseWormholeBookmarkName(name) {
   let destinationType = remainingNameCells[0];
   result.destinationType = options.systemType[destinationType.toLowerCase()];
   if (!result.destinationType) {
-    result.errors.push("invalid destination type: " + destinationType + " (accepted values are " + Object.keys(options.systemType).join(",") + ")");
+    if (["c1","c2","c3"].includes(destinationType.toLowerCase())) {
+      result.errors.push("destination type '" + destinationType + "' should be 'Unk'");
+    }
+    if (["c4","c5"].includes(destinationType.toLowerCase())) {
+      result.errors.push("destination type '" + destinationType + "' should be 'C4/C5'");
+    }
+    if (["c6"].includes(destinationType.toLowerCase())) {
+      result.errors.push("destination type '" + destinationType + "' should be 'C6'");
+    }
+    result.destinationType = "ambiguous";
+    result.alternateName = destinationType;
     return result;
   }
   remainingNameCells = remainingNameCells.slice(1);
   
   // parse optional human-readable destination system name
   if (regexes.enclosedInParens.exec(remainingNameCells[0])) {
-    result.alternateName = remainingNameCells[0].slice(1,-1);
+    let alternateName = remainingNameCells[0].slice(1,-1);
+    if (result.alternateName) {
+      result.alternateName = result.alternateName + " (" + alternateName + ")";
+    } else {
+      result.alternateName = alternateName;
+    }
     remainingNameCells = remainingNameCells.slice(1);
   }
   
